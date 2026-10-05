@@ -36,11 +36,11 @@ use App\Models\FoodDelivery\Stores;
 use App\Models\Admin\ServiceLocation;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Request\RecentSearch;
+use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Payment\CardInfo;
 use App\Models\Referral;
-use App\Models\Admin\Agents;
-
+use App\Models\Admin\UserDocument;
 
 class User extends Authenticatable implements CanSendOTPContract
 {
@@ -67,7 +67,8 @@ class User extends Authenticatable implements CanSendOTPContract
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email','gender', 'password', 'mobile', 'country','zone_id', 'profile_picture', 'email_confirmed', 'mobile_confirmed', 'email_confirmation_token', 'active','fcm_token','login_by','apn_token','timezone','rating','rating_total','no_of_ratings','refferal_code','referred_by','social_nickname','social_id','social_token','social_token_secret','social_refresh_token','social_expires_in','social_avatar','social_avatar_original','social_provider','company_key','lang','current_lat','current_lng','ride_otp','stripe_customer_id','map_type','is_deleted_at','service_location_id'
+        'name', 'username', 'email','gender', 'password', 'mobile', 'country','zone_id', 'profile_picture', 'email_confirmed', 'mobile_confirmed', 'email_confirmation_token', 'active','fcm_token','login_by','apn_token','timezone','rating','rating_total','no_of_ratings','refferal_code','referred_by','social_nickname','social_id','social_token','social_token_secret','social_refresh_token','social_expires_in','social_avatar','social_avatar_original','social_provider','company_key','lang','current_lat','current_lng','ride_otp','stripe_customer_id','map_type','is_deleted_at','service_location_id','approve','reason',
+        'stripe_customer_environment',
     ];
 
     /**
@@ -124,6 +125,10 @@ class User extends Authenticatable implements CanSendOTPContract
  
     public function getProfilePictureAttribute($value)
     {
+        if (is_string($value) && Str::startsWith($value, ['http://', 'https://'])) {
+            return $value;
+        }
+
         // $admin = auth()->user()->admin;
         if (!$value) {
             // Check gender and return the appropriate default image
@@ -133,7 +138,9 @@ class User extends Authenticatable implements CanSendOTPContract
                 $default_image_path = config('base.default.female-user.profile_picture');
             }elseif(auth()->check() && auth()->id() === $this->id && auth()->user()->agent) {
                 $default_image_path = config('base.default.agent.profile_picture');
-            }
+            }elseif(auth()->check() && auth()->id() === $this->id && auth()->user()->franchise) {
+                $default_image_path = config('base.default.franchise.profile_picture');
+            }  
             
             else {
                 $default_image_path = config('base.default.male-user.profile_picture');
@@ -212,10 +219,6 @@ class User extends Authenticatable implements CanSendOTPContract
     public function admin()
     {
         return $this->hasOne(AdminDetail::class, 'user_id', 'id');
-    }
-    public function agent()
-    {
-        return $this->hasOne(Agents::class, 'user_id', 'id');
     }
 
     /**
@@ -369,8 +372,6 @@ class User extends Authenticatable implements CanSendOTPContract
         return $this->apn_token;
     }
 
-
-
     protected $searchable = [
         'columns' => [
             'users.name' => 20,
@@ -412,8 +413,7 @@ class User extends Authenticatable implements CanSendOTPContract
 
     public function getRoleNameAttribute()
     {
-
-        return $this->roles()->exists() ? $this->roles[0]->slug : null;
+        return $this->roles->first()?->slug;
     }
 
     /**
@@ -467,5 +467,10 @@ class User extends Authenticatable implements CanSendOTPContract
     public function referrer()
     {
         return $this->belongsTo(User::class, 'referred_by','id');
+    }
+
+    public function userDocumentDetail()
+    {
+        return $this->hasMany(UserDocument::class, 'user_id', 'id');
     }
 }

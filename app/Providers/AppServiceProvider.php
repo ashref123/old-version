@@ -67,16 +67,15 @@ class AppServiceProvider extends ServiceProvider
     if ($firebase_database_url) {
         
         config([
-            'firebase.projects.app.credentials' => '/var/www/html/movex/storage/app/firebase/firebase_credentials.json',
+            'firebase.projects.app.credentials' => $firebaseCredentialsPath,
             'firebase.projects.app.database.url' => $firebase_database_url,
         ]);
 
 
-         $firebase = (new Firebase)
-            ->withServiceAccount('/var/www/html/movex/storage/app/firebase/firebase_credentials.json')
+        $firebase = (new Firebase)
+            ->withServiceAccount($firebaseCredentialsPath)
             ->withDatabaseUri($firebase_database_url);
-
-          
+        
         app()->instance('firebase', $firebase);
     }
 

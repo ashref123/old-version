@@ -15,7 +15,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "@amcharts/amcharts5": "^5.20.8",
+        "@amcharts/amcharts5": "^5.7.1",
         "@ckeditor/ckeditor5-build-classic": "^40.2.0",
         "@ckeditor/ckeditor5-vue": "^5.1.0",
         "@fullcalendar/bootstrap": "^6.1.19",

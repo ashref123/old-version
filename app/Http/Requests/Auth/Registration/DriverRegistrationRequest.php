@@ -34,7 +34,7 @@ class DriverRegistrationRequest extends BaseRequest
                     }
                 },
             ],
-            'device_token'=>'nullable',
+            'device_token'=>'required',
             'login_by'=>'required|in:android,ios',
             'vehicle_type'=>'sometimes|required|exists:vehicle_types,id',
             'address'=>'min:15',

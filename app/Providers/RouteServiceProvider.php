@@ -7,11 +7,6 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 
 class RouteServiceProvider extends ServiceProvider
 {
-    
-
-    public const HOME = '/';
-
-
     /**
      * This namespace is applied to your controller routes.
      *
@@ -29,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        parent::boot();  
+        parent::boot();
     }
 
     /**
@@ -38,10 +33,8 @@ class RouteServiceProvider extends ServiceProvider
      * @return void
      */
     public function map()
-    {
-        $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
+    { 
+        $this->mapInstallRoutes();
     }
 
     /**
@@ -51,27 +44,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes()
+    protected function mapInstallRoutes()
     {
         Route::middleware('web')
              ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+             ->group(base_path('routes/Install/install.php'));
     }
 
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
-    }
+     
 
-   
+    
 }

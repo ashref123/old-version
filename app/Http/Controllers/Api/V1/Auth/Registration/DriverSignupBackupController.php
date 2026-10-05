@@ -474,7 +474,7 @@ if ($request->has('mobile') && $request->has('email')) {
             'city'=>'sometimes|required',
             'service_location_id' => 'sometimes|required',
             'tax_number' => 'sometimes|required',
-            'device_token'=>'nullable',
+            'device_token'=>'required',
             'login_by'=>'required|in:android,ios',
             'country' =>'required|exists:countries,dial_code',
         ]);

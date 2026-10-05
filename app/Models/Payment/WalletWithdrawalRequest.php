@@ -8,6 +8,7 @@ use App\Models\Admin\Driver;
 use App\Models\User;
 use App\Models\Admin\Owner;
 use App\Models\Admin\Agents;
+use App\Models\Admin\Franchise;
 
 class WalletWithdrawalRequest extends Model
 {
@@ -24,7 +25,7 @@ class WalletWithdrawalRequest extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'driver_id', 'requested_amount', 'status','requested_currency','owner_id','payment_status','agent_id', 
+        'user_id', 'driver_id', 'requested_amount', 'status','requested_currency','owner_id','payment_status','agent_id', 'franchise_id'
     ];
 
     /**
@@ -42,7 +43,7 @@ class WalletWithdrawalRequest extends Model
     * @var array
     */
     protected $appends = [
-        'converted_created_at','driver_name','owner_name','agent_name',
+        'converted_created_at','driver_name','owner_name','agent_name','franchise_name'
 
     ];
      /**
@@ -106,12 +107,23 @@ class WalletWithdrawalRequest extends Model
     {
         return $this->belongsTo(Agents::class, 'agent_id', 'id');
     }
+    public function franchiseDetail()
+    {
+        return $this->belongsTo(Franchise::class, 'franchise_id', 'id');
+    }
     public function getAgentNameAttribute()
     {
         if ($this->agentDetail==null) {
             return null;
         }
         return Agents::where('id',$this->agent_id)->first()->first_name;
+    }
+    public function getFranchiseNameAttribute()
+    {
+        if ($this->franchise==null) {
+            return null;
+        }
+        return Franchise::where('id',$this->franchise_id)->first()->first_name;
     }
 
 }

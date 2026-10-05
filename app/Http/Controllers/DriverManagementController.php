@@ -89,20 +89,14 @@ class DriverManagementController extends BaseController
         
         $columns = Schema::getColumnListing('drivers'); // Get all columns
         $filteredColumns = array_diff($columns, ['route_coordinates']); // Exclude route_coordinates
-        $columns = Schema::getColumnListing('drivers'); // Get all columns
+
         $query = Driver::whereNull('owner_id')
         ->select($filteredColumns)
         ->orderBy('created_at', 'DESC');
 
         // $query = Driver::whereNull('owner_id')->orderBy('created_at','DESC');
 
-        // السطر الجديد الصحيح البديل:
-        if (request()->has('pending') || str_contains(request()->fullUrl(), 'pending')) {
-            $query->where('approve', 0);
-        } elseif (request()->has('approved') || str_contains(request()->fullUrl(), 'approved')) {
-            $query->where('approve', 1);
-        }
-        $results = $query->paginate();
+        $results =  $queryFilter->builder($query)->customFilter(new DriverFilter())->paginate();
 
         $drivers = $results->items();
 
