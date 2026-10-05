@@ -1,0 +1,16 @@
+{
+    "money_deposited_by_admin": "الأموال المودعة من قبل الإدارة",
+    "money_deposited": "الأموال المودعة",
+    "admin_commission_for_trip": "عمولة إدارية للرحلة",
+    "trip_commission": "عمولة الرحلة",
+    "cancellation_Fee": "رسوم الإلغاء",
+    "referral_commission": "لجنة الإحالة",
+    "spent_for_trip_rRequest": "Spent For Trip Request",
+    "withdrawn_from_wallet": "تم سحبها من المحفظة",
+    "daily_incentive_amount": "مبلغ الحافز اليومي",
+    "weekly_incentive_amount": "Weekly Incentive Amount",
+    "subscription_fee": "رسوم الاشتراك",
+    "driver_level_Up_bonus_reward": "مكافأة رفع مستوى السائق",
+    "driver_level_up_reward": "Driver Level Up Reward",
+    "discounted_amount_for_trip": "المبلغ المخفض للرحلة"
+}

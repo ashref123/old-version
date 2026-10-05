@@ -1,0 +1,15 @@
+{
+    "money_deposited_by_admin": "D\u00e9pos\u00e9 par l'admin",
+    "money_deposited": "Argent d\u00e9pos\u00e9",
+    "admin_commission_for_trip": "Commission de l'admin",
+    "trip_commission": "Commission sur la course",
+    "cancellation_Fee": "Frais d'annulation",
+    "referral_commission": "Commission de parrainage",
+    "spent_for_trip_rRequest": "D\u00e9pens\u00e9 pour la demande de course",
+    "withdrawn_from_wallet": "Retir\u00e9 du solde",
+    "daily_incentive_amount": "Montant quotidien de la prime",
+    "weekly_incentive_amount": "Montant hebdomadaire de la prime",
+    "subscription_fee": "Frais d'abonnement",
+    "driver_level_Up_bonus_reward": "Prime de mont\u00e9e en grade du chauffeur",
+    "driver_level_up_reward": "Prime de niveau du chauffeur"
+}
